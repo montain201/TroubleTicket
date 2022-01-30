@@ -4,14 +4,16 @@ using Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Core.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220130080414_ticketstateenum")]
+    partial class ticketstateenum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,8 @@ namespace Core.Migrations
                     b.Property<string>("TicketNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TicketType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TicketType")
+                        .HasColumnType("int");
 
                     b.HasKey("TicketId");
 
@@ -70,8 +72,8 @@ namespace Core.Migrations
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TicketState")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TicketState")
+                        .HasColumnType("int");
 
                     b.Property<string>("TicketStatusDescription")
                         .HasColumnType("nvarchar(max)");

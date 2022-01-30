@@ -10,6 +10,12 @@ namespace Core.Model
     {
         public int TicketId { get; set; }
         public string TicketNo { get; set; }
+        public string  TicketType { get; set; }
         public ICollection<TicketStatus> TicketStatuses { get; set; }
+    }
+    public enum TicketType
+    {
+        Development,
+        Bug
     }
 }

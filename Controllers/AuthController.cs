@@ -67,7 +67,7 @@ namespace Core.Controllers
                 Response.Cookies.Append("jwt", jwt, new CookieOptions
                 {
                     HttpOnly = false,
-                    Secure = false,
+                    Secure = true,
                     SameSite = SameSiteMode.None
                 });
                 return Ok(new
