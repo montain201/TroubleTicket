@@ -18,4 +18,12 @@ namespace Core.Model
         Development,
         Bug
     }
+    public class TicketVM
+    {
+        public string TicketType { get; set; }
+        public string TicketDescription { get; set; }
+        public string Attachment1 { get; set; }
+        public string Attachment2 { get; set; }
+        public string Attachment3 { get; set; }
+    }
 }
