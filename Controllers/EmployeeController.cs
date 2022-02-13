@@ -1,6 +1,8 @@
-﻿using Core.Model;
+﻿using Core.Helper;
+using Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,6 +11,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Core.Controllers
@@ -19,16 +22,24 @@ namespace Core.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
+        private readonly JwtService jwtservice;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public EmployeeController(IConfiguration configuration, IWebHostEnvironment environment)
+        public EmployeeController(IConfiguration configuration, IWebHostEnvironment environment, UserManager<IdentityUser> userManager, JwtService jwtService)
         {
+            _userManager = userManager;
+
             _configuration = configuration;
+            this.jwtservice = jwtService;
             _env = environment;
         }
         [HttpGet]
         [Authorize(Roles = "admin,manager")]
         public JsonResult Get()
         {
+            //var x = Request.Headers["Authorization"].ToString().Substring(7);
+            
+
             string query = @"select EmployeeId,EmployeeName,Department,
                               convert(varchar(10),DateOfJoining,120) AS DateOfJoining,PhotoFileName from dbo.Employee";
             DataTable table = new DataTable();
@@ -143,21 +154,22 @@ namespace Core.Controllers
             try
             {
                 var httpRequest = Request.Form;
-                string filename = string.Empty;
+                string returnFilename = string.Empty;
                 foreach (var file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[0];
-                    filename +="-"+ postedFile.FileName;
+                    var filename = postedFile.FileName;
                     var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
 
                     using (var stream = new FileStream(physicalPath, FileMode.Create))
                     {
                         postedFile.CopyTo(stream);
                     }
+                    returnFilename += ";-" + filename;
 
                 }
                 
-                return new JsonResult(filename);
+                return new JsonResult(returnFilename.Substring(2));
             }
             catch (Exception)
             {

@@ -29,6 +29,9 @@ namespace Core.Services.Impl
             if (identityResult.Succeeded)
             {
                 var appUser = await signInManager.UserManager.FindByNameAsync(loginUser.UserName);
+                var role = userManager.GetRolesAsync(appUser);
+                var lastrole = role.Result.FirstOrDefault();
+
                 PasswordVerificationResult passresult = signInManager.UserManager.PasswordHasher.VerifyHashedPassword(appUser, appUser.PasswordHash, loginUser.Password);
                 if (passresult == PasswordVerificationResult.Success)
                 {   ///////////////////////////////
@@ -39,8 +42,8 @@ namespace Core.Services.Impl
                     {
                         Subject = new ClaimsIdentity(new Claim[]
                         {
-                                   new Claim(ClaimTypes.Name, "user1"),
-                                    new Claim(ClaimTypes.Role, "admin")
+                                    new Claim(ClaimTypes.Name, loginUser.UserName+";"+appUser.Id),
+                                    new Claim(ClaimTypes.Role, lastrole)
                         }),
 
                         Expires = DateTime.UtcNow.AddYears(1),

@@ -20,10 +20,10 @@ namespace Core.Model
     }
     public class TicketVM
     {
+        public int TicketId { get; set; }
         public string TicketType { get; set; }
         public string TicketDescription { get; set; }
-        public string Attachment1 { get; set; }
-        public string Attachment2 { get; set; }
-        public string Attachment3 { get; set; }
+        public string Attachment { get; set; }
+        public string TicketState { get; set; }
     }
 }

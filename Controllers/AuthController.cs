@@ -23,6 +23,7 @@ namespace Core.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly JwtService jwtservice;
+       
         private IUserService _userService;
 
 
@@ -32,6 +33,7 @@ namespace Core.Controllers
             this.signInManager = signInManager;
             this.jwtservice = jwtService;
             _userService = userService;
+           
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterUser newUser)
@@ -101,6 +103,7 @@ namespace Core.Controllers
             {
                 var jwt = Request.Cookies["jwt"];
                 var token = jwtservice.Verify(jwt);
+
                 string userId = token.Issuer;
                 var appUser = await signInManager.UserManager.FindByIdAsync(userId);
                 return Ok(appUser);
