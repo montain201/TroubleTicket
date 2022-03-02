@@ -100,7 +100,7 @@ namespace Core
 
             app.UseHttpsRedirection();
             app.UseCors(options => options
-                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:3001" })
+                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:3001","https://ticket.sanpad.ir" })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()

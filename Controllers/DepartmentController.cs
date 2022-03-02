@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Core.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class DepartmentController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -113,6 +113,12 @@ namespace Core.Controllers
             }
 
             return new JsonResult("Deleted Successfully");
+        }
+
+        [HttpGet("Test")]
+        public JsonResult Test()
+        {
+            return new JsonResult("Test");
         }
 
     }
