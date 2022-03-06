@@ -57,14 +57,12 @@ namespace Core.Services.Impl
                   
                 }
                 else
-                    return ("Invalid UserName or Password");
+                    return ("invalid");
             }
-
-
 
             else
             {
-                return ("login");
+                return ("invalid");
             }
         }
 

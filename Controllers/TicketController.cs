@@ -127,30 +127,31 @@ namespace Core.Controllers
             _authDbContext.Add(ticket);
             _authDbContext.SaveChanges();
             string expertList = string.Empty;
-            if (User.IsInRole("expert"))
-                expertList = "AND USERID = '" + userIdx + "'";
-            string query = @" WITH LastTicketStatus AS (
-                              SELECT TS.*,T.TicketNo,T.TicketType, ROW_NUMBER() OVER (PARTITION BY TS.ticketid ORDER BY creationdate DESC) AS RowNo
-                              FROM TicketStatus AS TS INNER JOIN Ticket T ON T.TicketId = TS.TicketId 
-                            )
-                            SELECT * FROM LastTicketStatus LS WHERE LS.RowNo = 1 "+expertList;
+            //if (User.IsInRole("expert"))
+            //    expertList = "AND USERID = '" + userIdx + "'";
+            //string query = @" WITH LastTicketStatus AS (
+            //                  SELECT TS.*,T.TicketNo,T.TicketType, ROW_NUMBER() OVER (PARTITION BY TS.ticketid ORDER BY creationdate DESC) AS RowNo
+            //                  FROM TicketStatus AS TS INNER JOIN Ticket T ON T.TicketId = TS.TicketId 
+            //                )
+            //                SELECT * FROM LastTicketStatus LS WHERE LS.RowNo = 1 "+expertList;
 
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("SQLServerConnection");
-            SqlDataReader myReader;
+            //DataTable table = new DataTable();
+            //string sqlDataSource = _configuration.GetConnectionString("SQLServerConnection");
+            //SqlDataReader myReader;
 
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult(table);
+            //using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            //{
+            //    myCon.Open();
+            //    using (SqlCommand myCommand = new SqlCommand(query, myCon))
+            //    {
+            //        myReader = myCommand.ExecuteReader();
+            //        table.Load(myReader);
+            //        myReader.Close();
+            //        myCon.Close();
+            //    }
+            //}
+            //return new JsonResult(table);
+            return new JsonResult("Succeed.");
         }
 
         [HttpPut]
@@ -177,7 +178,7 @@ namespace Core.Controllers
             string query = @" WITH LastTicketStatus AS (
                               SELECT TS.TicketStatusId,TS.TicketState,
                                      TS.TicketStatusDescription,FORMAT(TS.CreationDate, 'yyyy/MM/dd-HH:mm:ss', 'fa')  AS CreationDate,
-                                     T.TicketId,T.TicketNo,T.TicketType,U.UserName, ROW_NUMBER() OVER (PARTITION BY TS.ticketid ORDER BY creationdate DESC) AS RowNo
+                                     T.TicketId,U.UserName, ROW_NUMBER() OVER (PARTITION BY TS.ticketid ORDER BY creationdate DESC) AS RowNo
                               FROM TicketStatus AS TS INNER JOIN Ticket T ON T.TicketId = TS.TicketId 
                                 INNER JOIN   AspNetUsers U ON TS.UserId = U.Id
                             )

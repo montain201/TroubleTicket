@@ -65,20 +65,24 @@ namespace Core.Controllers
             if (ModelState.IsValid)
             {
                 var jwt = _userService.Login(loginUser).GetAwaiter().GetResult();
-                
-                Response.Cookies.Append("jwt", jwt, new CookieOptions
+                if (jwt != "invalid")
                 {
-                    HttpOnly = false,
-                    Secure = true,
-                    SameSite = SameSiteMode.None
-                });
-                return Ok(new
-                {
-                    message = "success"
-                });
+                    Response.Cookies.Append("jwt", jwt, new CookieOptions
+                    {
+                        HttpOnly = false,
+                        Secure = true,
+                        SameSite = SameSiteMode.None
+                    });
+                    return Ok(new
+                    {
+                        message = "success"
+                    });
+                }
+                else
+                    return Ok(new { message = "Invalid UserName or Password" });
             }
             else
-                return Ok("Invalid UserName or Password");
+                return Ok(new { message = "Invalid UserName or Password" });
         }
 
 
