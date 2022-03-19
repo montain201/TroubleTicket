@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace Core.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class TicketController : ControllerBase

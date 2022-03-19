@@ -40,7 +40,7 @@ namespace Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(
-            //c =>{c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());}
+            //c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); }
             );
             //JSON Serializer
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
@@ -100,7 +100,7 @@ namespace Core
 
             app.UseHttpsRedirection();
             app.UseCors(options => options
-                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:3001","https://ticket.sanpad.ir" })
+                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:3001", "https://ticket.sanpad.ir/" })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()

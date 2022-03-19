@@ -88,18 +88,19 @@ namespace Core.Controllers
 
 
 
-        //[HttpPost("Logout")]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await signInManager.SignOutAsync();
-        //    Response.Cookies.Delete("jwt", new CookieOptions()
-        //    {
-        //        HttpOnly = true,
-        //        Secure = true,
-        //        SameSite = SameSiteMode.None
-        //    });
-        //    return Ok("login");
-        //}
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            Response.Cookies.Delete("jwt", new CookieOptions()
+            {
+                HttpOnly = false,
+                Secure = true,
+                SameSite = SameSiteMode.None
+            });
+            return Ok("login");
+        }
+
         [HttpGet("User")]
         public async Task<IActionResult> User()
         {
