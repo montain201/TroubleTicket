@@ -16,6 +16,7 @@ namespace Core.Data
         public DbSet<Ticket> Ticket { get; set; }
         public DbSet<TicketStatus> TicketStatus { get; set; }
         public DbSet<TicketAttachment> TicketAttachment { get; set; }
+        public DbSet<UserDepartment> UserDepartment { get; set; }
 
     }
 }

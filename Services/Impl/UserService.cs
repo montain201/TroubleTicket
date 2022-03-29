@@ -31,7 +31,7 @@ namespace Core.Services.Impl
                 var appUser = await signInManager.UserManager.FindByNameAsync(loginUser.UserName);
                 var role = userManager.GetRolesAsync(appUser);
                 var lastrole = role.Result.FirstOrDefault();
-
+                
                 PasswordVerificationResult passresult = signInManager.UserManager.PasswordHasher.VerifyHashedPassword(appUser, appUser.PasswordHash, loginUser.Password);
                 if (passresult == PasswordVerificationResult.Success)
                 {   ///////////////////////////////
