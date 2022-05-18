@@ -60,7 +60,7 @@ namespace Core.Controllers
 
             string whereClause = User.IsInRole("expert") ? " AND U.Id = '" + userIdx + @"'" : "";
 
-            string query = @" SELECT T.TicketId,TicketNo,TicketType,TicketState,TicketStatusDescription,TS.UserId,CreationDate,U.UserName,D.DepartmentId,D.DepartmentName,R.Name AS RoleName FROM Ticket T INNER JOIN TicketStatus TS
+            string query = @" SELECT T.TicketId,TicketNo,TicketType,TicketState,TicketStatusDescription,TS.UserId,FORMAT(TS.CreationDate, 'yyyy/MM/dd-HH:mm', 'fa')  AS CreationDate,U.UserName,D.DepartmentId,D.DepartmentName,R.Name AS RoleName FROM Ticket T INNER JOIN TicketStatus TS
                                  ON  T.TicketId = TS.TicketId
 		                         INNER JOIN AspNetUsers U ON TS.UserId = U.id 
 		                         INNER JOIN UserDepartment UD ON  U.Id =    UD.UserId
